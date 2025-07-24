@@ -30,11 +30,18 @@ Over a two-week period, I conducted a hands-on risk assessment of a live cloud-b
 | GRC Understanding                  | Suggested policy and control improvements  |
 | Communication of Security Findings | Presented detailed recommendations         |
 
-## Steps
-drag & drop screenshots here or use imgur and reference them using imgsrc
+### 🔎 Vulnerability Findings
+The vulnerability assessment revealed multiple high- and critical-risk issues across key OWASP Top 10 categories. Below is a visual snapshot of our findings:
 
-Every screenshot should have some text explaining what the screenshot is about.
+![Vulnerability Findings](./vulnerability-findings.png)
 
-Example below.
+Key highlights include:
 
-*Ref 1: Network Diagram*
+- 🔴 **Unauthenticated POST Request** (Critical): Exposes sensitive blog content and author emails without authentication.
+- 🟠 **Post-authenticated User Enumeration** (High): Discloses full user directory including PII and privilege levels.
+- 🟠 **Weak Password Policy** (High): Allows overly simple passwords, increasing the risk of brute-force and credential stuffing attacks.
+- 🟡 **Permissive CORS Policy** (Medium): Allows cross-domain API calls, increasing the risk of unauthorized data access.
+- 🟡 **Missing X-Frame-Options Header** (Medium): Enables clickjacking by allowing the site to be embedded in iframes.
+- 🔴 **SQL Injection with Command Execution** (Critical): Allows arbitrary SQL and OS commands; full database compromise possible.
+
+Each vulnerability was categorized according to the [OWASP Top 10](https://owasp.org/www-project-top-ten/) and evaluated based on its potential impact to the client's environment.
