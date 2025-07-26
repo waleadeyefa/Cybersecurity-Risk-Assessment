@@ -45,3 +45,37 @@ Key highlights include:
 - 🔴 **SQL Injection with Command Execution** (Critical): Allows arbitrary SQL and OS commands; full database compromise possible.
 
 Each vulnerability was categorized according to the [OWASP Top 10](https://owasp.org/www-project-top-ten/) and evaluated based on its potential impact to the client's environment.
+
+### 🚨 SQL Injection (Critical Severity)
+
+**Issue**:  
+The application allowed direct execution of unvalidated SQL queries, making it possible for an attacker to perform database operations — including reading, modifying, and potentially executing system-level commands.
+
+**Impact**:  
+This critical flaw can lead to **full database compromise** and even **remote code execution** through exploitation of functions like `xp_cmdshell`.
+
+## 🔍 SQL Injection (Command Execution) – Proof of Concept
+
+![SQL Injection Screenshot](your_image_link_here)
+
+**Screenshot Description**  
+This screenshot, taken from OWASP ZAP, shows fuzzing attempts made against the `/change-profile` endpoint using SQL injection payloads. The application consistently returns `500 Internal Server Error` responses for malformed SQL input, indicating that input is not properly sanitized before being processed by the backend database.
+
+In the bottom panel, you can see several classic payloads like:
+- `exec master..xp_cmdshell`
+- `drop table temp --`
+- `insert into users(...)`
+
+These attempts reveal the backend database's failure to handle untrusted input safely. Even though no `200 OK` response is returned here, the repeated server errors triggered by malicious input strongly suggest that the application is vulnerable to SQL injection.
+
+**Why this matters**  
+- A successful SQL injection could allow an attacker to **read, modify, or delete database contents**.
+- If command execution is enabled (e.g., via `xp_cmdshell`), the attacker could potentially achieve **remote code execution**, leading to full system compromise.
+
+**Remediation Recommendations**
+- Use parameterized queries and prepared statements.
+- Sanitize and validate all user inputs.
+- Implement error handling that returns generic messages to end users.
+- Disable dangerous SQL server features like `xp_cmdshell`.
+
+**Risk Level**: 🔴 **Critical**
