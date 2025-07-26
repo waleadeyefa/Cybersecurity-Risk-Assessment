@@ -56,7 +56,7 @@ This critical flaw can lead to **full database compromise** and even **remote co
 
 ## 🔍 SQL Injection (Command Execution) – Proof of Concept
 
-![SQL Injection Screenshot](your_image_link_here)
+![SQL Injection Screenshot](./sqlinjection.png)
 
 **Screenshot Description**  
 This screenshot, taken from OWASP ZAP, shows fuzzing attempts made against the `/change-profile` endpoint using SQL injection payloads. The application consistently returns `500 Internal Server Error` responses for malformed SQL input, indicating that input is not properly sanitized before being processed by the backend database.
